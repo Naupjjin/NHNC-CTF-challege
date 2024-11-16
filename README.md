@@ -5,4 +5,5 @@
 |challenge|catagory|difficult|
 |---------|--------|---------|
 |Slime Machine revenge|pwn||
+|Slime Machine revenge revenge|pwn||
 
