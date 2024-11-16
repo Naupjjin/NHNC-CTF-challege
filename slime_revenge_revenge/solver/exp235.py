@@ -25,7 +25,7 @@ if REMOTE_LOCAL=="y":
     debug_init()
     
 else:                                           
-    REMOTE_INFO=split_nc("nc 23.146.248.196 48763")
+    REMOTE_INFO=split_nc("nc 23.146.248.196 41423")
 
     REMOTE_IP=REMOTE_INFO[0]
     REMOTE_PORT=int(REMOTE_INFO[1])
