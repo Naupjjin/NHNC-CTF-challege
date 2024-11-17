@@ -1,5 +1,5 @@
 # NHNC-CTF-challege
-> Author: Naup
+> Author: 堇姬Naup
 
 ## challenge
 |challenge|catagory|solution link|
